@@ -2,3 +2,17 @@ services:
   redis:
     image: redis:latest
     restart: unless-stopped
+  producer:
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: producer.Dockerfile
+    ports:
+      - 80:80
+  consumer:
+    pull_policy: build
+    build:
+      context: .
+      dockerfile: consumer.Dockerfile
+    depends_on:
+      - redis
